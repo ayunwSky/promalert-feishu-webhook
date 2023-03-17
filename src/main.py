@@ -15,6 +15,9 @@ import datetime
 import urllib3
 from requests.adapters import HTTPAdapter
 from flask import Flask, request, jsonify
+import base64
+import hashlib
+import hmac
 
 # urllib3.disable_warnings()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -42,10 +45,14 @@ def healch_check():
 def send():
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     feishu_webhook_url = app.config.get("APP_FS_WEBHOOK")
+    feishu_webhook_srt = app.config.get("APP_FS_SECRET")
     if feishu_webhook_url == None:
         app.logger.error("Please set system environment variable and try again, Require: (APP_FS_WEBHOOK)")
         sys.exit(1)
-
+    timestamp = int(datetime.datetime.now().timestamp())
+    string_to_sign = '{}\n{}'.format(timestamp, feishu_webhook_srt)
+    hmac_code = hmac.new(string_to_sign.encode("utf-8"), digestmod=hashlib.sha256).digest()
+    sign = base64.b64encode(hmac_code).decode('utf-8')
     data = json.loads(request.data)
     app.logger.info(data)
     alerts = data['alerts']
@@ -69,6 +76,7 @@ def send():
 
         send_data = {
             "msg_type": "post",
+            "sign": sign,
             "content": {
                 "post": {
                     "zh_cn": {
