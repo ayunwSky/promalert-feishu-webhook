@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  feishu-webhook:
+    container_name: promalert-feishu-webhook
+    image: promalert-feishu-webhook:v0.0.1
+    restart: always
+    # network_mode: "host"
+    ports:
+      - "3880:8080"
+    environment:
+      APP_ENV: prod
+      APP_PORT: "8080"
+      APP_HOST: "0.0.0.0"
+      APP_FS_WEBHOOK: "https://open.feishu.cn/open-apis/bot/v2/hook/50xxx-xxxxxxxx"
+    networks:
+      - feishu-webhook
+
+networks:
+  feishu-webhook:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.0.0/24
