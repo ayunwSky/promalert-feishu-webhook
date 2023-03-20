@@ -23,4 +23,4 @@ RUN pip install --no-cache-dir -r /data/feishu-webhook/requirements.txt -i https
 EXPOSE 8080
 
 # 一定要用双引号不要用单引号.用单引号就一直提示你找不到改脚本
-CMD ["/data/feishu-webhook/startApp.sh"]
+CMD ["python", "/opt/main.py"]
