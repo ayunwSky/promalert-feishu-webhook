@@ -46,9 +46,12 @@ def send():
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     feishu_webhook_url = app.config.get("APP_FS_WEBHOOK")
     feishu_webhook_srt = app.config.get("APP_FS_SECRET")
-    if feishu_webhook_url == None:
-        app.logger.error("Please set system environment variable and try again, Require: (APP_FS_WEBHOOK)")
+
+    if feishu_webhook_url == None or \
+        feishu_webhook_srt == None:
+        app.logger.error("Please set system environment variable and try again, Require: (APP_FS_WEBHOOK、APP_FS_SECRET)")
         sys.exit(1)
+
     timestamp = int(datetime.datetime.now().timestamp())
     string_to_sign = '{}\n{}'.format(timestamp, feishu_webhook_srt)
     hmac_code = hmac.new(string_to_sign.encode("utf-8"), digestmod=hashlib.sha256).digest()
@@ -107,7 +110,7 @@ def send():
         }
         send_data = json.dumps(send_data)
         print(send_data)
-        
+
         try:
             # 利用 requests封装好的方法来设置http请求的重试次数
             session = requests.Session()

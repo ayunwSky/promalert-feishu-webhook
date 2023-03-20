@@ -33,5 +33,10 @@ APP_HOST = os.getenv("APP_HOST", "0.0.0.0")
 # 项目使用的端口
 APP_PORT = os.getenv("APP_PORT", "8080")
 
-# 必须在 docker-compose.yml 中设置飞书的 webhook 地址. 默认该 webhook 地址为空,为空则无法正常启动该 webhook 服务
+# 必须在 docker-compose.yml 中设置飞书的 webhook 地址. 
+# 默认该 webhook 地址为空,为空则无法正常启动该 webhook 服务
 APP_FS_WEBHOOK = os.getenv("APP_FS_WEBHOOK", None)
+
+# 必须在 docker-compose.yml 中设置飞书自定义机器人安全设置中的签名校验秘钥.
+# 默认该 签名校验秘钥为空,为空则无法正常启动该 webhook 服务
+APP_FS_SECRET = os.getenv("APP_FS_SECRET", None)

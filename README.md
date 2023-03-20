@@ -17,3 +17,11 @@ docker build -t promalert-feishu-webhook:v0.0.1 .
 ```shell
 docker-compose up -d
 ```
+
+## 安全设置
+
+### 签名校验
+
+```shell
+https://www.feishu.cn/hc/zh-CN/articles/244506653275
+```
