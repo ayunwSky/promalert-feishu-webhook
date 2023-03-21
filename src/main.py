@@ -75,12 +75,8 @@ def send():
         warning_level = "告警等级: %s \n" % output['labels']['severity']
         warning_instance = "告警实例: %s \n" % output['labels']['instance']
         warning_info = "告警信息: %s" % message.replace(',', '\n').replace(':', ':  ')
-        warning_end_time = "结束时间: %s \n" % arrow.get(output['endsAt']).to(
-            'Asia/Shanghai'
-        ).format('YYYY-MM-DD HH:mm:ss')
-        warning_start_time = "告警时间: %s \n" % arrow.get(output['startsAt']).to(
-            'Asia/Shanghai'
-        ).format('YYYY-MM-DD HH:mm:ss')
+        warning_end_time = "结束时间: %s \n" % arrow.get(output['endsAt']).to('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
+        warning_start_time = "告警时间: %s \n" % arrow.get(output['startsAt']).to('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
 
         send_data = {
             "timestamp": timestamp,
@@ -111,15 +107,7 @@ def send():
             session.mount('http://', HTTPAdapter(max_retries=3))
             session.mount('https://', HTTPAdapter(max_retries=3))
             send_data = json.dumps(send_data)
-            resp = session.post(
-                feishu_webhook_url,
-                data=send_data,
-                headers=headers,
-                timeout=5,
-                verify=False,
-            )
-            result = resp.json()
-            print(result)
+            session.post(feishu_webhook_url, data=send_data, headers=headers, timeout=5, verify=False)
         except requests.exceptions.RequestException as e:
             app.logger.error(e)
 
@@ -128,8 +116,4 @@ def send():
 
 if __name__ == '__main__':
     app.logger.info("Prometheus Python webhook start...")
-    app.run(
-        host=app.config.get("APP_HOST"),
-        port=int(app.config.get("APP_PORT")),
-        debug=app.config.get("DEBUG"),
-    )
+    app.run(host=app.config.get("APP_HOST"), port=int(app.config.get("APP_PORT")), debug=app.config.get("DEBUG"))
