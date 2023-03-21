@@ -8,5 +8,5 @@
 DATE=$(date +'%Y%m%d')
 TIMESTAMP=$(date +%s)
 
-docker build -t promalert-feishu-webhook-v2:${DATE}-v${TIMESTAMP} .
+docker build -t promalert-feishu-webhook:${DATE}-v${TIMESTAMP} .
 sed -i "s@TAG@${DATE}-v${TIMESTAMP}@g" docker-compose.yml
