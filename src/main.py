@@ -13,11 +13,11 @@ import arrow
 import logging
 import datetime
 import urllib3
-from requests.adapters import HTTPAdapter
-from flask import Flask, request, jsonify
 import base64
 import hashlib
 import hmac
+from requests.adapters import HTTPAdapter
+from flask import Flask, request, jsonify
 
 # urllib3.disable_warnings()
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -33,7 +33,6 @@ def before_first_request():
     app.logger.setLevel(logging.INFO)
 
 
-# 健康检查接口
 @app.route('/healthz', methods=['GET'])
 def healch_check():
     current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")

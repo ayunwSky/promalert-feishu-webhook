@@ -3,9 +3,8 @@ version: "3"
 services:
   feishu-webhook:
     container_name: promalert-feishu-webhook
-    image: promalert-feishu-webhook:v0.0.1
+    image: promalert-feishu-webhook:TAG
     restart: always
-    # network_mode: "host"
     ports:
       - "3880:8080"
     environment:
