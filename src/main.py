@@ -82,8 +82,7 @@ def send():
             "content": {
                 "post": {
                     "zh_cn": {
-                        "title":
-                        title,
+                        "title": title,
                         "content": [[{
                             "tag": "text",
                             "text": warning_instance
