@@ -73,6 +73,7 @@ def send():
 
         title = f"新平台监控告警通知: {output['labels']['alertname']}"
         warning_status = "当前状态: %s \n" % output['status']
+        warning_name = "当前状态: %s \n" % output['labels']['alertname']
         warning_level = "告警等级: %s \n" % output['labels']['severity']
         warning_instance = "告警实例: %s \n" % output['labels']['instance']
         warning_info = "告警信息: %s" % message.replace(',', '\n').replace(':', ':  ')
@@ -103,8 +104,29 @@ def send():
                 },
             }
         elif feishu_alert_type == "interactive":
-            pass
-
+            title = f"发生了{output['labels']['severity']}级别告警"
+            send_data = {
+                "msg_type": "interactive",
+                "timestamp": timestamp,
+                "sign": gen_sign(timestamp,feishu_webhook_srt),
+                "card": {
+                    "config": {"wide_screen_mode": True},
+                    "elements": [
+                        {"tag": "div","text": {"tag": "plain_text","content": warning_name,"lines": 1},
+                        "fields": [
+                            {"text": {"tag": "lark_md","content": warning_instance,}},
+                            {"text": {"tag": "lark_md","content": warning_info,}},
+                            {"text": {"tag": "lark_md","content": warning_start_time,}},
+                            {"text": {"tag": "lark_md","content": warning_end_time,}}
+                            ]
+                        }
+                    ],
+                    "header": {
+                        "template": 'red' if warning_status == 'firing' else 'green',
+                        "title": {"content": title if warning_status == 'firing' else '告警恢复',"tag": "plain_text"}
+                    }
+                }
+            }
 
         try:
             # 利用 requests封装好的方法来设置http请求的重试次数
