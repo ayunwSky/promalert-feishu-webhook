@@ -30,7 +30,8 @@ sed -i "s@TAG@${DATE}-v${TIMESTAMP}@g" docker-compose.yml
 1. 更改 docker-compose.yml 中的镜像
 2. 设置`APP_FS_WEBHOOK`环境变量为你自己的飞书的`webhook`地址
 3. 设置`APP_FS_SECRET`环境变量为你自己的飞书群机器人的签名校验秘钥
-4. 启动服务
+4. 设置`APP_FS_ALERT_TYPE`环境变量以选择机器人消息类型。有两个选项: post(富文本)、interactive(消息卡片)
+5. 启动服务
 
 ```shell
 docker-compose up -d

@@ -38,5 +38,9 @@ APP_PORT = os.getenv("APP_PORT", "8080")
 APP_FS_WEBHOOK = os.getenv("APP_FS_WEBHOOK", None)
 
 # 必须在 docker-compose.yml 中设置飞书自定义机器人安全设置中的签名校验秘钥.
-# 默认该 签名校验秘钥为空,为空则无法正常启动该 webhook 服务
+# 默认该签名校验秘钥为空,为空则无法正常启动该 webhook 服务
 APP_FS_SECRET = os.getenv("APP_FS_SECRET", None)
+
+# 在 docker-compose.yml 中设置,用于让用户选择使用post(富文本)类型的消息还是interactive(消息卡片)类型的消息
+# 默认是post(富文本)类型的消息
+APP_FS_ALERT_TYPE = os.getenv("APP_FS_ALERT_TYPE", "post")
