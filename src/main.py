@@ -45,6 +45,7 @@ def send():
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     feishu_webhook_url = app.config.get("APP_FS_WEBHOOK")
     feishu_webhook_srt = app.config.get("APP_FS_SECRET")
+    feishu_alert_type = app.config.get("APP_FS_ALERT_TYPE")
 
     if feishu_webhook_url == None or feishu_webhook_srt == None:
         app.logger.error(
@@ -78,28 +79,32 @@ def send():
         warning_end_time = "结束时间: %s \n" % arrow.get(output['endsAt']).to('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
         warning_start_time = "告警时间: %s \n" % arrow.get(output['startsAt']).to('Asia/Shanghai').format('YYYY-MM-DD HH:mm:ss')
 
-        send_data = {
-            "timestamp": timestamp,
-            "sign": sign,
-            "msg_type": "post",
-            "content": {
-                "post": {
-                    "zh_cn": {
-                        "title": title,
-                        "content": [
-                            [
-                                {"tag": "text", "text": warning_instance},
-                                {"tag": "text", "text": warning_start_time},
-                                {"tag": "text", "text": warning_end_time},
-                                {"tag": "text", "text": warning_level},
-                                {"tag": "text", "text": warning_info},
-                                {"tag": "text", "text": warning_status},
-                            ]
-                        ],
+        if feishu_alert_type == "post":
+            send_data = {
+                "timestamp": timestamp,
+                "sign": sign,
+                "msg_type": "post",
+                "content": {
+                    "post": {
+                        "zh_cn": {
+                            "title": title,
+                            "content": [
+                                [
+                                    {"tag": "text", "text": warning_instance},
+                                    {"tag": "text", "text": warning_start_time},
+                                    {"tag": "text", "text": warning_end_time},
+                                    {"tag": "text", "text": warning_level},
+                                    {"tag": "text", "text": warning_info},
+                                    {"tag": "text", "text": warning_status},
+                                ]
+                            ],
+                        }
                     }
-                }
-            },
-        }
+                },
+            }
+        elif feishu_alert_type == "interactive":
+            pass
+
 
         try:
             # 利用 requests封装好的方法来设置http请求的重试次数
