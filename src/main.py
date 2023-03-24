@@ -74,7 +74,7 @@ def send():
         title = f"新平台监控告警通知: {output['labels']['alertname']}"
         warning_status = "当前状态: %s \n" % output['status']
         warning_isfiring = output['status']
-        warning_name = "当前状态: %s \n" % output['labels']['alertname']
+        warning_name = "告警名称: %s \n" % output['labels']['alertname']
         warning_level = output['labels']['severity']
         warning_level_text = "告警等级: %s \n" % output['labels']['severity']
         warning_instance = "告警实例: %s \n" % output['labels']['instance']
