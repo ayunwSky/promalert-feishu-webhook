@@ -73,6 +73,7 @@ def send():
 
         title = f"新平台监控告警通知: {output['labels']['alertname']}"
         warning_status = "当前状态: %s \n" % output['status']
+        warning_isfiring = output['status']
         warning_name = "当前状态: %s \n" % output['labels']['alertname']
         warning_level = "告警等级: %s \n" % output['labels']['severity']
         warning_instance = "告警实例: %s \n" % output['labels']['instance']
@@ -108,7 +109,7 @@ def send():
             send_data = {
                 "msg_type": "interactive",
                 "timestamp": timestamp,
-                "sign": gen_sign(timestamp,feishu_webhook_srt),
+                "sign": sign,
                 "card": {
                     "config": {"wide_screen_mode": True},
                     "elements": [
@@ -122,8 +123,8 @@ def send():
                         }
                     ],
                     "header": {
-                        "template": 'red' if warning_status == 'firing' else 'green',
-                        "title": {"content": title if warning_status == 'firing' else '告警恢复',"tag": "plain_text"}
+                        "template": 'red' if warning_isfiring == 'firing' else 'green',
+                        "title": {"content": title if warning_isfiring == 'firing' else '告警恢复',"tag": "plain_text"}
                     }
                 }
             }
