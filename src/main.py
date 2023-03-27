@@ -71,7 +71,7 @@ def send():
                 message = 'null'
                 app.logger.error(f"Cnt not get any alert info, message is {message}")
 
-        title = f"新平台监控告警通知: {output['labels']['alertname']}"
+        title = f"平台监控告警通知: {output['labels']['alertname']}"
         warning_status = "当前状态: %s \n" % output['status']
         warning_isfiring = output['status']
         warning_name = "告警名称: %s \n" % output['labels']['alertname']
