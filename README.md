@@ -8,6 +8,12 @@ python3.11 + flask 编写了一个对接飞书 API 实现告警的 webhook
 https://www.feishu.cn/hc/zh-CN/articles/244506653275#tabs0|lineguid-AHuiGI
 ```
 
+## 飞书开发文档
+
+```shell
+https://open.feishu.cn/document/ukTMukTMukTM/uADOwUjLwgDM14CM4ATN
+```
+
 ## 安全设置
 
 ### 签名校验
