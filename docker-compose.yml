@@ -8,12 +8,12 @@ services:
     ports:
       - "3880:8080"
     environment:
-      APP_ENV: prod
+      APP_ENV: "prod"
       APP_PORT: "8080"
       APP_HOST: "0.0.0.0"
       APP_FS_WEBHOOK: "https://open.feishu.cn/open-apis/bot/v2/hook/50xxx-xxxxxxxx"
       APP_FS_SECRET: "飞书自定义机器人安全设置中的签名校验秘钥"
-      # post 代表富文本,interactive 表示消息卡片
+      # post 代表富文本,interactive 表示消息卡片,value值请用英文状态下的 双引号 包裹
       APP_FS_ALERT_TYPE: "可选值为post和interactive"
     networks:
       - feishu-webhook
