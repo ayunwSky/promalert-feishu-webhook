@@ -3,7 +3,7 @@ version: "3"
 services:
   feishu-webhook:
     container_name: promalert-feishu-webhook
-    image: promalert-feishu-webhook:TAG
+    image: promalert-feishu-webhook:20230327-v1679885508
     restart: always
     ports:
       - "3880:8080"
